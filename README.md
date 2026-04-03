@@ -18,6 +18,23 @@ Clone this repo:
 git clone https://github.com/estherjk/nvim-config.git ~/.config/nvim
 ```
 
+## Quick Reference
+
+The leader key is `Space`. Press it and wait for [which-key](https://github.com/folke/which-key.nvim) to show all available keys.
+
+Some useful keys:
+
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| `<leader>e`  | File explorer                    |
+| `<leader>fn` | New file                         |
+| `<leader>bd` | Close current buffer (open file) |
+| `<leader>ac` | Claude Code                      |
+| `<leader>gs` | Git status                       |
+| `<leader>qq` | Quit all                         |
+
+See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full list.
+
 ## LazyVim Extras
 
 | Category   | [Extras](https://www.lazyvim.org/extras)                                           |
