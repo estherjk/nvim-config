@@ -1,23 +1,56 @@
-# 💤 LazyVim
+# Neovim Config
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+[LazyVim](https://github.com/LazyVim/LazyVim)-based config with Dracula theme.
+
+## Installation
+
+Install [neovim](https://neovim.io/doc/install/).
+
+For macOS:
+
+```bash
+brew install neovim
+```
+
+Clone this repo:
+
+```bash
+git clone https://github.com/estherjk/nvim-config.git ~/.config/nvim
+```
+
+## LazyVim Extras
+
+| Category   | [Extras](https://www.lazyvim.org/extras)                                           |
+| ---------- | ---------------------------------------------------------------------------------- |
+| AI         | Claude Code                                                                        |
+| Languages  | Docker, JSON, Markdown, PHP, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML |
+| Formatting | Black (Python), Prettier (JS/TS)                                                   |
+
+## Custom Plugins
+
+| Plugin                                                   | Description                                    |
+| -------------------------------------------------------- | ---------------------------------------------- |
+| [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation          |
+| [dracula](lua/plugins/dracula.lua)                       | Dracula color scheme                           |
+| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer showing hidden/ignored files     |
+| [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint with MD013 (line length) disabled |
 
 ## vim-tmux-navigator
 
 Seamless navigation between Neovim splits and tmux panes using the same keybindings.
 
-| Key | Action |
-|-----|--------|
-| `Ctrl-h` | Move left |
-| `Ctrl-j` | Move down |
-| `Ctrl-k` | Move up |
-| `Ctrl-l` | Move right |
+| Key      | Action                    |
+| -------- | ------------------------- |
+| `Ctrl-h` | Move left                 |
+| `Ctrl-j` | Move down                 |
+| `Ctrl-k` | Move up                   |
+| `Ctrl-l` | Move right                |
 | `Ctrl-\` | Go to previous split/pane |
 
 These keys work across both Neovim splits and tmux panes. At the edge of a Neovim split, the key moves into the adjacent tmux pane and vice versa.
 
 Requires config on both sides:
+
 - Neovim: `lua/plugins/vim-tmux-navigator.lua`
 - tmux: `~/.tmux.conf`
 
