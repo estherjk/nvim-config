@@ -24,14 +24,18 @@ The leader key is `Space`. Press it and wait for [which-key](https://github.com/
 
 Some useful keys:
 
-| Key          | Action                           |
-| ------------ | -------------------------------- |
-| `<leader>e`  | File explorer                    |
-| `<leader>fn` | New file                         |
-| `<leader>bd` | Close current buffer (open file) |
-| `<leader>ac` | Claude Code                      |
-| `<leader>gs` | Git status                       |
-| `<leader>qq` | Quit all                         |
+| Key                | Action               |
+| ------------------ | -------------------- |
+| `<leader>e`        | File explorer        |
+| `<leader>fn`       | New file             |
+| `<leader><space>`  | Find files           |
+| `<leader>/`        | Search text in files |
+| `<leader>cr`       | Rename symbol        |
+| `<leader>cf`       | Format code          |
+| `<leader>bd`       | Close current buffer |
+| `<leader>ac`       | Claude Code          |
+| `<leader>gs`       | Git status           |
+| `<leader>qq`       | Quit all             |
 
 See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full list.
 
