@@ -24,18 +24,18 @@ The leader key is `Space`. Press it and wait for [which-key](https://github.com/
 
 Some useful keys:
 
-| Key                | Action               |
-| ------------------ | -------------------- |
-| `<leader>e`        | File explorer        |
-| `<leader>fn`       | New file             |
-| `<leader><space>`  | Find files           |
-| `<leader>/`        | Search text in files |
-| `<leader>cr`       | Rename symbol        |
-| `<leader>cf`       | Format code          |
-| `<leader>bd`       | Close current buffer |
-| `<leader>ac`       | Claude Code          |
-| `<leader>gs`       | Git status           |
-| `<leader>qq`       | Quit all             |
+| Key               | Action               |
+| ----------------- | -------------------- |
+| `<leader>e`       | File explorer        |
+| `<leader>fn`      | New file             |
+| `<leader><space>` | Find files           |
+| `<leader>/`       | Search text in files |
+| `<leader>cr`      | Rename symbol        |
+| `<leader>cf`      | Format code          |
+| `<leader>bd`      | Close current buffer |
+| `<leader>ac`      | Claude Code          |
+| `<leader>gs`      | Git status           |
+| `<leader>qq`      | Quit all             |
 
 See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full list.
 
@@ -53,8 +53,22 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 | -------------------------------------------------------- | ---------------------------------------------- |
 | [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation          |
 | [dracula](lua/plugins/dracula.lua)                       | Dracula color scheme                           |
-| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer showing hidden/ignored files     |
+| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer + image viewer (Kitty protocol)  |
 | [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint with MD013 (line length) disabled |
+
+## Image support (snacks.nvim)
+
+Images render directly in the buffer using the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/), via [`snacks.image`](https://github.com/folke/snacks.nvim/blob/main/docs/image.md). Works in [Ghostty](https://ghostty.org/), Kitty, and WezTerm (limited).
+
+### Requirements
+
+[ImageMagick](https://imagemagick.org/) is needed for any non-PNG format (jpg, gif, webp, pdf, svg, etc.):
+
+```bash
+brew install imagemagick
+```
+
+Run `:checkhealth snacks` to verify image support is working.
 
 ## vim-tmux-navigator
 
