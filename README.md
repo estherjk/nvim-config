@@ -1,6 +1,6 @@
 # Neovim Config
 
-[LazyVim](https://github.com/LazyVim/LazyVim)-based config with Dracula theme.
+[LazyVim](https://github.com/LazyVim/LazyVim)-based config.
 
 ## Installation
 
@@ -51,8 +51,8 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 | Plugin                                                   | Description                                    |
 | -------------------------------------------------------- | ---------------------------------------------- |
+| [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)              |
 | [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation          |
-| [dracula](lua/plugins/dracula.lua)                       | Dracula color scheme                           |
 | [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer + image viewer (Kitty protocol)  |
 | [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint with MD013 (line length) disabled |
 
