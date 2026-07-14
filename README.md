@@ -61,13 +61,7 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 [Avante](https://www.lazyvim.org/extras/ai/avante) is configured to use Codex as its default provider. Avante communicates with Codex through the [codex-acp](https://github.com/agentclientprotocol/codex-acp) Agent Client Protocol adapter.
 
-Install the adapter globally so the `codex-acp` executable is available to Neovim:
-
-```bash
-npm install -g @agentclientprotocol/codex-acp
-```
-
-The package includes a compatible Codex CLI dependency. On first use, authenticate with ChatGPT when prompted, or provide `CODEX_API_KEY` or `OPENAI_API_KEY` in your environment.
+The adapter is launched with `npx`, which downloads it automatically when needed; no global installation is required. The package includes a compatible Codex CLI dependency. On first use, authenticate with ChatGPT when prompted, or provide `CODEX_API_KEY` or `OPENAI_API_KEY` in your environment.
 
 Useful Avante commands include `:AvanteAsk`, `:AvanteChat`, `:AvanteEdit`, `:AvanteToggle`, and `:AvanteModels`.
 
