@@ -41,20 +41,35 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 ## LazyVim Extras
 
-| Category   | [Extras](https://www.lazyvim.org/extras)                                           |
-| ---------- | ---------------------------------------------------------------------------------- |
-| AI         | Claude Code                                                                        |
-| Languages  | Docker, JSON, Markdown, PHP, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML |
-| Formatting | Black (Python), Prettier (JS/TS)                                                   |
+| Category   | [Extras](https://www.lazyvim.org/extras)                                                                                |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| AI         | [Avante](https://www.lazyvim.org/extras/ai/avante) (Codex), [Claude Code](https://www.lazyvim.org/extras/ai/claudecode) |
+| Languages  | Docker, JSON, Markdown, PHP, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML                                      |
+| Formatting | Black (Python), Prettier (JS/TS)                                                                                        |
 
 ## Custom Plugins
 
 | Plugin                                                   | Description                                    |
 | -------------------------------------------------------- | ---------------------------------------------- |
+| [avante.nvim](lua/plugins/avante.lua)                    | AI assistant using Codex via ACP (default)     |
 | [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)              |
 | [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation          |
 | [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer + image viewer (Kitty protocol)  |
 | [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint with MD013 (line length) disabled |
+
+## Avante with Codex
+
+[Avante](https://www.lazyvim.org/extras/ai/avante) is configured to use Codex as its default provider. Avante communicates with Codex through the [codex-acp](https://github.com/agentclientprotocol/codex-acp) Agent Client Protocol adapter.
+
+Install the adapter globally so the `codex-acp` executable is available to Neovim:
+
+```bash
+npm install -g @agentclientprotocol/codex-acp
+```
+
+The package includes a compatible Codex CLI dependency. On first use, authenticate with ChatGPT when prompted, or provide `CODEX_API_KEY` or `OPENAI_API_KEY` in your environment.
+
+Useful Avante commands include `:AvanteAsk`, `:AvanteChat`, `:AvanteEdit`, `:AvanteToggle`, and `:AvanteModels`.
 
 ## Image support (snacks.nvim)
 
