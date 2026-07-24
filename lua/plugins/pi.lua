@@ -1,6 +1,8 @@
 return {
   -- Merges with the ai.sidekick LazyExtra: adds the custom `pi` CLI tool and a key to open it directly.
   -- Needs the pi CLI: curl -fsSL https://pi.dev/install.sh | sh
+  -- `cmd` resolves from PATH. If pi was installed as a global npm package under nvm,
+  -- it vanishes inside repos that pin another Node version -- see README.md.
   {
     "folke/sidekick.nvim",
     opts = {

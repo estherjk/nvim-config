@@ -75,6 +75,37 @@ curl -fsSL https://pi.dev/install.sh | sh
 | `<leader>av` | Send the visual selection to the CLI |
 | `<C-.>`      | Focus the CLI panel                  |
 
+### pi is "not found" inside a repo (nvm)
+
+`<leader>ap` works in some directories but reports `pi` not found in others, typically a repo pinning a Node version.
+
+`install.sh` is a wrapper around `npm install -g @earendil-works/pi-coding-agent`, targeting `npm prefix -g` with no awareness of [nvm](https://github.com/nvm-sh/nvm). So pi lands in whichever Node version was active at install time:
+
+```text
+~/.nvm/versions/node/v24.16.0/bin/pi
+```
+
+`nvm use` swaps that whole `bin` off `PATH`, taking `pi` with it — and the `chpwd` hook in `~/.zshrc` runs `nvm use` on every `cd`. Sidekick spawns the bare command `pi` (`lua/plugins/pi.lua`), resolved from the `PATH` Neovim inherited.
+
+Not a compatibility problem: pi only needs Node `>=22.19.0`. Reinstalling just moves the problem, since the installer's version-independent `~/.local` fallback only fires when the npm prefix is unwritable, which never happens under nvm.
+
+Fix with a shim in `~/.local/bin`, which nvm never touches and `~/.zshrc` keeps on `PATH`:
+
+```bash
+cat > ~/.local/bin/pi <<'EOF'
+#!/bin/sh
+# Pin pi to the nvm Node it was installed under so it survives `nvm use`.
+PI_NODE_VERSION=v24.16.0
+PI_ROOT="$HOME/.nvm/versions/node/$PI_NODE_VERSION"
+
+exec "$PI_ROOT/bin/node" \
+  "$PI_ROOT/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js" "$@"
+EOF
+chmod +x ~/.local/bin/pi
+```
+
+Run `rehash` if the current shell still reports it missing. Bump `PI_NODE_VERSION` after any reinstall — note that `install.sh` will then resolve `pi` to the shim, which npm does not own, so let it upgrade the real package and check the shim afterwards.
+
 [Claude Code](https://www.lazyvim.org/extras/ai/claudecode) is also enabled and runs in its own terminal split via `<leader>ac`. Both extras bind keys under `<leader>a` and a few of them collide (`aa`, `ad`, `af`, `as`), so press `<leader>a` and let which-key show what is actually bound.
 
 ## Image support (snacks.nvim)
