@@ -34,6 +34,7 @@ Some useful keys:
 | `<leader>cf`      | Format code          |
 | `<leader>bd`      | Close current buffer |
 | `<leader>ac`      | Claude Code          |
+| `<leader>ap`      | pi (side panel)      |
 | `<leader>gs`      | Git status           |
 | `<leader>qq`      | Quit all             |
 
@@ -41,29 +42,40 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 ## LazyVim Extras
 
-| Category   | [Extras](https://www.lazyvim.org/extras)                                                                                |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| AI         | [Avante](https://www.lazyvim.org/extras/ai/avante) (Codex), [Claude Code](https://www.lazyvim.org/extras/ai/claudecode) |
-| Languages  | Docker, JSON, Markdown, PHP, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML                                      |
-| Formatting | Black (Python), Prettier (JS/TS)                                                                                        |
+| Category   | [Extras](https://www.lazyvim.org/extras)                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| AI         | [Claude Code](https://www.lazyvim.org/extras/ai/claudecode), [Sidekick](https://www.lazyvim.org/extras/ai/sidekick) |
+| Languages  | Astro, Docker, JSON, Markdown, PHP, Prisma, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML                   |
+| Formatting | Black (Python), Prettier (JS/TS)                                                                                    |
 
 ## Custom Plugins
 
-| Plugin                                                   | Description                                    |
-| -------------------------------------------------------- | ---------------------------------------------- |
-| [avante.nvim](lua/plugins/avante.lua)                    | AI assistant using Codex via ACP (default)     |
-| [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)              |
-| [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation          |
-| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer + image viewer (Kitty protocol)  |
-| [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint with MD013 (line length) disabled |
+| Plugin                                                   | Description                                         |
+| -------------------------------------------------------- | --------------------------------------------------- |
+| [sidekick.nvim](lua/plugins/pi.lua)                      | Adds the `pi` CLI as an AI tool; NES disabled       |
+| [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)                   |
+| [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation               |
+| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer (hidden/ignored shown) + image viewer |
+| [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint using `.markdownlint.yaml` (MD013 off) |
 
-## Avante with Codex
+## AI tools (sidekick.nvim)
 
-[Avante](https://www.lazyvim.org/extras/ai/avante) is configured to use Codex as its default provider. Avante communicates with Codex through the [codex-acp](https://github.com/agentclientprotocol/codex-acp) Agent Client Protocol adapter.
+[Sidekick](https://www.lazyvim.org/extras/ai/sidekick) runs AI CLIs in a Neovim side panel. `lua/plugins/pi.lua` extends the extra with the [pi](https://pi.dev) CLI and disables next-edit suggestions (NES), which would otherwise require Copilot.
 
-The adapter is launched with `npx`, which downloads it automatically when needed; no global installation is required. The package includes a compatible Codex CLI dependency. On first use, authenticate with ChatGPT when prompted, or provide `CODEX_API_KEY` or `OPENAI_API_KEY` in your environment.
+Install the pi CLI:
 
-Useful Avante commands include `:AvanteAsk`, `:AvanteChat`, `:AvanteEdit`, `:AvanteToggle`, and `:AvanteModels`.
+```bash
+curl -fsSL https://pi.dev/install.sh | sh
+```
+
+| Key          | Action                               |
+| ------------ | ------------------------------------ |
+| `<leader>ap` | Toggle pi in the side panel          |
+| `<leader>at` | Send the current context to the CLI  |
+| `<leader>av` | Send the visual selection to the CLI |
+| `<C-.>`      | Focus the CLI panel                  |
+
+[Claude Code](https://www.lazyvim.org/extras/ai/claudecode) is also enabled and runs in its own terminal split via `<leader>ac`. Both extras bind keys under `<leader>a` and a few of them collide (`aa`, `ad`, `af`, `as`), so press `<leader>a` and let which-key show what is actually bound.
 
 ## Image support (snacks.nvim)
 
