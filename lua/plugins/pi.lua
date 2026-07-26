@@ -6,8 +6,8 @@ return {
   {
     "folke/sidekick.nvim",
     opts = {
-      -- Disable NES (requires Copilot)
-      nes = { enabled = false },
+      nes = { enabled = false }, -- requires Copilot
+      copilot = { status = { enabled = false } }, -- no sign-in warnings
       cli = {
         tools = {
           pi = { cmd = { "pi" } },
