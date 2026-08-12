@@ -18,8 +18,10 @@ return {
     },
     -- stylua: ignore
     keys = {
-      -- Open pi in the right split (overrides the extra's <leader>ap).
+      -- Open pi in the right split (overrides the extra's <leader>ap prompt picker).
       { "<leader>ap", function() require("sidekick.cli").toggle({ name = "pi", focus = true }) end, desc = "pi (side panel)" },
+      -- Restore the displaced prompt picker: sends {file}, {this}, {diagnostics}, etc. to the attached CLI.
+      { "<leader>aP", function() require("sidekick.cli").prompt() end, mode = { "n", "x" }, desc = "Sidekick Select Prompt" },
       -- <leader>ac is ClaudeCode, so codex gets the x.
       { "<leader>ax", function() require("sidekick.cli").toggle({ name = "codex", focus = true }) end, desc = "codex (side panel)" },
     },
