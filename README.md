@@ -35,6 +35,7 @@ Some useful keys:
 | `<leader>bd`      | Close current buffer |
 | `<leader>ac`      | Claude Code          |
 | `<leader>ap`      | pi (side panel)      |
+| `<leader>ax`      | codex (side panel)   |
 | `<leader>gs`      | Git status           |
 | `<leader>qq`      | Quit all             |
 
@@ -52,7 +53,7 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 | Plugin                                                   | Description                                         |
 | -------------------------------------------------------- | --------------------------------------------------- |
-| [sidekick.nvim](lua/plugins/pi.lua)                      | Adds the `pi` CLI as an AI tool; NES disabled       |
+| [sidekick.nvim](lua/plugins/sidekick.lua)                | Adds `pi` as an AI tool, keys for pi/codex; NES off |
 | [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)                   |
 | [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation               |
 | [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer (hidden/ignored shown) + image viewer |
@@ -60,17 +61,20 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 
 ## AI tools (sidekick.nvim)
 
-[Sidekick](https://www.lazyvim.org/extras/ai/sidekick) runs AI CLIs in a Neovim side panel. `lua/plugins/pi.lua` extends the extra with the [pi](https://pi.dev) CLI and disables next-edit suggestions (NES), which would otherwise require Copilot.
+[Sidekick](https://www.lazyvim.org/extras/ai/sidekick) runs AI CLIs in a Neovim side panel. `lua/plugins/sidekick.lua` extends the extra with the [pi](https://pi.dev) CLI, adds direct-open keys for pi and [codex](https://github.com/openai/codex), and disables next-edit suggestions (NES), which would otherwise require Copilot.
 
-Install the pi CLI:
+Codex is one of sidekick's built-in tools, so it needs no `cli.tools` entry — only the keymap. Install the CLIs:
 
 ```bash
-curl -fsSL https://pi.dev/install.sh | sh
+curl -fsSL https://pi.dev/install.sh | sh   # pi
+brew install codex                          # codex
 ```
 
 | Key          | Action                               |
 | ------------ | ------------------------------------ |
 | `<leader>ap` | Toggle pi in the side panel          |
+| `<leader>ax` | Toggle codex in the side panel       |
+| `<leader>as` | Pick any CLI from the full list      |
 | `<leader>at` | Send the current context to the CLI  |
 | `<leader>av` | Send the visual selection to the CLI |
 | `<C-.>`      | Focus the CLI panel                  |
@@ -85,7 +89,9 @@ curl -fsSL https://pi.dev/install.sh | sh
 ~/.nvm/versions/node/v24.16.0/bin/pi
 ```
 
-`nvm use` swaps that whole `bin` off `PATH`, taking `pi` with it — and the `chpwd` hook in `~/.zshrc` runs `nvm use` on every `cd`. Sidekick spawns the bare command `pi` (`lua/plugins/pi.lua`), resolved from the `PATH` Neovim inherited.
+`nvm use` swaps that whole `bin` off `PATH`, taking `pi` with it — and the `chpwd` hook in `~/.zshrc` runs `nvm use` on every `cd`. Sidekick spawns the bare command `pi` (`lua/plugins/sidekick.lua`), resolved from the `PATH` Neovim inherited.
+
+Codex avoids this entirely — Homebrew puts it at `/opt/homebrew/bin/codex`, which nvm never touches.
 
 Not a compatibility problem: pi only needs Node `>=22.19.0`. Reinstalling just moves the problem, since the installer's version-independent `~/.local` fallback only fires when the npm prefix is unwritable, which never happens under nvm.
 
