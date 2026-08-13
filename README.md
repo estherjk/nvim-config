@@ -1,47 +1,71 @@
 # Neovim Config
 
-[LazyVim](https://github.com/LazyVim/LazyVim)-based config.
+Personal [LazyVim](https://github.com/LazyVim/LazyVim)-based Neovim config: Catppuccin, AI CLIs in a side panel, tmux-aware splits, and inline image rendering.
 
-## Installation
-
-Install [neovim](https://neovim.io/doc/install/).
-
-For macOS:
+## Quick start
 
 ```bash
-brew install neovim
+# 1. Install neovim and the tools LazyVim expects
+brew install neovim ripgrep fd lazygit
+
+# 2. Clone this config
+git clone git@github.com:estherjk/nvim-config.git ~/.config/nvim
+
+# 3. Launch — lazy.nvim bootstraps and installs everything on first run
+nvim
 ```
 
-Clone this repo:
+Then run `:LazyHealth` to confirm nothing is missing.
 
-```bash
-git clone https://github.com/estherjk/nvim-config.git ~/.config/nvim
-```
+Optional add-ons: [AI CLIs](#ai-tools), [tmux navigation](#tmux-navigation), and [image rendering](#image-rendering).
 
-## Quick Reference
+## Keymaps
 
-The leader key is `Space`. Press it and wait for [which-key](https://github.com/folke/which-key.nvim) to show all available keys.
-
-Some useful keys:
+The leader key is `Space`. Press it and wait for [which-key](https://github.com/folke/which-key.nvim) to show what's bound.
 
 | Key               | Action               |
 | ----------------- | -------------------- |
-| `<leader>e`       | File explorer        |
-| `<leader>fn`      | New file             |
 | `<leader><space>` | Find files           |
 | `<leader>/`       | Search text in files |
+| `<leader>e`       | File explorer        |
+| `<leader>fn`      | New file             |
 | `<leader>cr`      | Rename symbol        |
 | `<leader>cf`      | Format code          |
 | `<leader>bd`      | Close current buffer |
-| `<leader>ac`      | Claude Code          |
-| `<leader>ap`      | pi (side panel)      |
-| `<leader>ax`      | codex (side panel)   |
 | `<leader>gs`      | Git status           |
+| `<leader>gg`      | Lazygit              |
 | `<leader>qq`      | Quit all             |
 
 See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full list.
 
-## LazyVim Extras
+## AI tools
+
+This config enables two AI integrations: [Claude Code](https://www.lazyvim.org/extras/ai/claudecode) (its own terminal split) and [Sidekick](https://www.lazyvim.org/extras/ai/sidekick) (any supported AI CLI in a side panel).
+
+Install the CLIs you want:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash  # claude
+curl -fsSL https://pi.dev/install.sh | sh       # pi
+brew install --cask codex                       # codex
+```
+
+| Key          | Action                                    |
+| ------------ | ----------------------------------------- |
+| `<leader>ac` | Toggle Claude Code                        |
+| `<leader>ap` | Toggle pi in the side panel               |
+| `<leader>ax` | Toggle codex in the side panel            |
+| `<leader>as` | Pick a CLI from the full list             |
+| `<leader>aP` | Pick a prompt to send to the attached CLI |
+| `<leader>at` | Send the current context to the CLI       |
+| `<leader>av` | Send the visual selection to the CLI      |
+| `<C-.>`      | Focus the CLI panel                       |
+
+Both integrations bind under `<leader>a`, and some shortcuts overlap (`aa`, `ad`, `af`, `as`) — press `<leader>a` and let which-key show which mapping is active.
+
+## What's configured
+
+LazyVim extras (`lazyvim.json`):
 
 | Category   | [Extras](https://www.lazyvim.org/extras)                                                                            |
 | ---------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -49,88 +73,17 @@ See the [LazyVim keymaps docs](https://www.lazyvim.org/keymaps) for the full lis
 | Languages  | Astro, Docker, JSON, Markdown, PHP, Prisma, Python, SQL, Tailwind, TOML, TypeScript (vtsls), YAML                   |
 | Formatting | Black (Python), Prettier (JS/TS)                                                                                    |
 
-## Custom Plugins
+Custom plugin specs (`lua/plugins/`):
 
-| Plugin                                                   | Description                                         |
-| -------------------------------------------------------- | --------------------------------------------------- |
-| [sidekick.nvim](lua/plugins/sidekick.lua)                | Adds `pi` as an AI tool, keys for pi/codex; NES off |
-| [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (default)                   |
-| [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation               |
-| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer (hidden/ignored shown) + image viewer |
-| [nvim-lint](lua/plugins/nvim-lint.lua)                   | Markdownlint using `.markdownlint.yaml` (MD013 off) |
+| Plugin                                                   | What it does                                                     |
+| -------------------------------------------------------- | ---------------------------------------------------------------- |
+| [sidekick.nvim](lua/plugins/sidekick.lua)                | Adds pi as a CLI tool, direct-open keys for pi/codex; NES off    |
+| [catppuccin](lua/plugins/catppuccin.lua)                 | Catppuccin color scheme (the default)                            |
+| [snacks.nvim](lua/plugins/explorer.lua)                  | File explorer showing hidden/ignored files, plus image rendering |
+| [vim-tmux-navigator](lua/plugins/vim-tmux-navigator.lua) | Seamless Neovim/tmux split navigation                            |
+| [nvim-lint](lua/plugins/nvim-lint.lua)                   | Points markdownlint at `.markdownlint.yaml` (MD013 off)          |
 
-## AI tools (sidekick.nvim)
-
-[Sidekick](https://www.lazyvim.org/extras/ai/sidekick) runs AI CLIs in a Neovim side panel. `lua/plugins/sidekick.lua` extends the extra with the [pi](https://pi.dev) CLI, adds direct-open keys for pi and [codex](https://github.com/openai/codex), and disables next-edit suggestions (NES), which would otherwise require Copilot.
-
-Codex is one of sidekick's built-in tools, so it needs no `cli.tools` entry — only the keymap. Install the CLIs:
-
-```bash
-curl -fsSL https://pi.dev/install.sh | sh   # pi
-brew install codex                          # codex
-```
-
-| Key          | Action                               |
-| ------------ | ------------------------------------ |
-| `<leader>ap` | Toggle pi in the side panel          |
-| `<leader>ax` | Toggle codex in the side panel       |
-| `<leader>as` | Pick any CLI from the full list      |
-| `<leader>at` | Send the current context to the CLI  |
-| `<leader>av` | Send the visual selection to the CLI |
-| `<C-.>`      | Focus the CLI panel                  |
-
-### pi is "not found" inside a repo (nvm)
-
-`<leader>ap` works in some directories but reports `pi` not found in others, typically a repo pinning a Node version.
-
-`install.sh` is a wrapper around `npm install -g @earendil-works/pi-coding-agent`, targeting `npm prefix -g` with no awareness of [nvm](https://github.com/nvm-sh/nvm). So pi lands in whichever Node version was active at install time:
-
-```text
-~/.nvm/versions/node/v24.16.0/bin/pi
-```
-
-`nvm use` swaps that whole `bin` off `PATH`, taking `pi` with it — and the `chpwd` hook in `~/.zshrc` runs `nvm use` on every `cd`. Sidekick spawns the bare command `pi` (`lua/plugins/sidekick.lua`), resolved from the `PATH` Neovim inherited.
-
-Codex avoids this entirely — Homebrew puts it at `/opt/homebrew/bin/codex`, which nvm never touches.
-
-Not a compatibility problem: pi only needs Node `>=22.19.0`. Reinstalling just moves the problem, since the installer's version-independent `~/.local` fallback only fires when the npm prefix is unwritable, which never happens under nvm.
-
-Fix with a shim in `~/.local/bin`, which nvm never touches and `~/.zshrc` keeps on `PATH`:
-
-```bash
-cat > ~/.local/bin/pi <<'EOF'
-#!/bin/sh
-# Pin pi to the nvm Node it was installed under so it survives `nvm use`.
-PI_NODE_VERSION=v24.16.0
-PI_ROOT="$HOME/.nvm/versions/node/$PI_NODE_VERSION"
-
-exec "$PI_ROOT/bin/node" \
-  "$PI_ROOT/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js" "$@"
-EOF
-chmod +x ~/.local/bin/pi
-```
-
-Run `rehash` if the current shell still reports it missing. Bump `PI_NODE_VERSION` after any reinstall — note that `install.sh` will then resolve `pi` to the shim, which npm does not own, so let it upgrade the real package and check the shim afterwards.
-
-[Claude Code](https://www.lazyvim.org/extras/ai/claudecode) is also enabled and runs in its own terminal split via `<leader>ac`. Both extras bind keys under `<leader>a` and a few of them collide (`aa`, `ad`, `af`, `as`), so press `<leader>a` and let which-key show what is actually bound.
-
-## Image support (snacks.nvim)
-
-Images render directly in the buffer using the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/), via [`snacks.image`](https://github.com/folke/snacks.nvim/blob/main/docs/image.md). Works in [Ghostty](https://ghostty.org/), Kitty, and WezTerm (limited).
-
-### Requirements
-
-[ImageMagick](https://imagemagick.org/) is needed for any non-PNG format (jpg, gif, webp, pdf, svg, etc.):
-
-```bash
-brew install imagemagick
-```
-
-Run `:checkhealth snacks` to verify image support is working.
-
-## vim-tmux-navigator
-
-Seamless navigation between Neovim splits and tmux panes using the same keybindings.
+## tmux navigation
 
 | Key      | Action                    |
 | -------- | ------------------------- |
@@ -140,16 +93,7 @@ Seamless navigation between Neovim splits and tmux panes using the same keybindi
 | `Ctrl-l` | Move right                |
 | `Ctrl-\` | Go to previous split/pane |
 
-These keys work across both Neovim splits and tmux panes. At the edge of a Neovim split, the key moves into the adjacent tmux pane and vice versa.
-
-Requires config on both sides:
-
-- Neovim: `lua/plugins/vim-tmux-navigator.lua`
-- tmux: `~/.tmux.conf`
-
-### tmux setup
-
-Copy the following into `~/.tmux.conf`, then reload with `tmux source-file ~/.tmux.conf`:
+Add this to `~/.tmux.conf` to use the same `Ctrl` shortcuts for moving between Neovim splits and tmux panes, then reload with `tmux source-file ~/.tmux.conf`:
 
 ```bash
 # Smart pane switching with awareness of Vim splits.
@@ -167,3 +111,38 @@ if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
 if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
     "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
 ```
+
+## Image rendering
+
+Images render directly in the buffer via [`snacks.image`](https://github.com/folke/snacks.nvim/blob/main/docs/image.md), using the [Kitty graphics protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/). Works in [Ghostty](https://ghostty.org/), Kitty, and WezTerm (limited).
+
+These formats need [ImageMagick](https://imagemagick.org/): jpg, gif, webp, pdf, and svg.
+
+```bash
+brew install imagemagick
+```
+
+Run `:checkhealth snacks` to verify the setup.
+
+## Troubleshooting
+
+### `<leader>ap` says that pi cannot be found
+
+This usually happens in a repository that uses a specific Node version. If you install pi with [nvm](https://github.com/nvm-sh/nvm), it is added to the Node version that was active at the time. When nvm switches Node versions, pi may disappear from Neovim’s command path.
+
+Create a small launcher for pi in `~/.local/bin`. nvm does not change this directory, so the launcher will continue to work when you change repositories:
+
+```bash
+cat > ~/.local/bin/pi <<'EOF'
+#!/bin/sh
+# Always run pi with the Node version where it was installed.
+PI_NODE_VERSION=v24.16.0
+PI_ROOT="$HOME/.nvm/versions/node/$PI_NODE_VERSION"
+
+exec "$PI_ROOT/bin/node" \
+  "$PI_ROOT/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js" "$@"
+EOF
+chmod +x ~/.local/bin/pi
+```
+
+If your current shell still cannot find pi, run `rehash` and try again. If you reinstall pi with a different Node version, update `PI_NODE_VERSION` in the launcher to match. The launcher is separate from npm, so npm can update the actual pi package without replacing it; check the launcher after updating pi.
